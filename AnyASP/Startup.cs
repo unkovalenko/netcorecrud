@@ -30,16 +30,14 @@ namespace AnyASP
          
             services.AddTransient<IControllerExt, EControllerExt>();
             // services.AddTransient<ICheckUserAccess, ECheckUserAccess>();
-            
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(options => //CookieAuthenticationOptions
                {
                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Login");
-               
                });
 
 
-            services.AddMvc();
+            services.AddControllersWithViews();
             services.AddTransient<ISQLToolsRepository, EFSQLToolsRepository>();
         }
 
@@ -60,12 +58,16 @@ namespace AnyASP
             app.UseStaticFiles();
            // app.UseCookiePolicy();
             app.UseAuthentication();
-           /* app.UseMvc(routes =>
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });*/
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

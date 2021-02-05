@@ -38,7 +38,8 @@ namespace AnyASP.Models
         {
             try
             {
-                Parameters = JsonConvert.DeserializeObject<CfgParameters>(line);
+                Parameters =  JsonConvert.DeserializeObject<CfgParameters>(line);
+                
                 return true;
             }
             catch

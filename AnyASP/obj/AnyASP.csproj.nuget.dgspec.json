@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MSVS2019\\AnyASP\\AnyASP\\AnyASP.csproj": {}
+    "D:\\MVS2019\\netcorecrud\\AnyASP\\AnyASP.csproj": {}
   },
   "projects": {
-    "D:\\MSVS2019\\AnyASP\\AnyASP\\AnyASP.csproj": {
+    "D:\\MVS2019\\netcorecrud\\AnyASP\\AnyASP.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MSVS2019\\AnyASP\\AnyASP\\AnyASP.csproj",
+        "projectUniqueName": "D:\\MVS2019\\netcorecrud\\AnyASP\\AnyASP.csproj",
         "projectName": "AnyASP",
-        "projectPath": "D:\\MSVS2019\\AnyASP\\AnyASP\\AnyASP.csproj",
-        "packagesPath": "C:\\Users\\unk_home\\.nuget\\packages\\",
-        "outputPath": "D:\\MSVS2019\\AnyASP\\AnyASP\\obj\\",
+        "projectPath": "D:\\MVS2019\\netcorecrud\\AnyASP\\AnyASP.csproj",
+        "packagesPath": "C:\\Users\\unk_amd\\.nuget\\packages\\",
+        "outputPath": "D:\\MVS2019\\netcorecrud\\AnyASP\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\unk_home\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\unk_amd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -31,7 +31,6 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -43,7 +42,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "EntityFramework.Firebird": {
               "target": "Package",
@@ -59,7 +57,11 @@
             },
             "Google.Cloud.Storage.V1": {
               "target": "Package",
-              "version": "[3.3.0, )"
+              "version": "[3.4.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             }
           },
           "imports": [
@@ -80,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
