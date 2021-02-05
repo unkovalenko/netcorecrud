@@ -139,3 +139,4 @@ D:\MVS2019\netcorecrud\AnyASP\obj\Debug\netcoreapp3.1\staticwebassets\AnyASP.Sta
 D:\MVS2019\netcorecrud\AnyASP\obj\Debug\netcoreapp3.1\AnyASP.dll
 D:\MVS2019\netcorecrud\AnyASP\obj\Debug\netcoreapp3.1\AnyASP.pdb
 D:\MVS2019\netcorecrud\AnyASP\obj\Debug\netcoreapp3.1\AnyASP.genruntimeconfig.cache
+D:\MVS2019\netcorecrud\AnyASP\obj\Debug\netcoreapp3.1\AnyASP.csprojAssemblyReference.cache

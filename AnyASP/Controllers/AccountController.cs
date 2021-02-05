@@ -10,12 +10,6 @@ using System.Security.Claims;
 
 using AnyASP.Models;
 
-
-
-
-
-
-
 namespace AnyASP
 {
     public class LoginDate
@@ -41,9 +35,73 @@ namespace AnyASP
 			return View();
         }
 
+        [Route("Login")]
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginModel model)
+        {
+           
+            if (ModelState.IsValid)
+            {
 
-		
-		[Route("LoginDate")]
+                User user = _users.GetUser(model.Name, model.Password);
+                if (user != null)
+                {
+                    CookieOptions cookieOptions = new CookieOptions();
+                    bool checkOutConnect;
+                    try
+                    {
+                        checkOutConnect = (cntExt.Configuration["CheckOutConnect"]) == "1";
+                    }
+                    catch
+                    {
+                        checkOutConnect = false;
+                    }
+
+                    int cookiesExpiresDay;
+                    try
+                    {
+                        cookiesExpiresDay = Convert.ToInt32(cntExt.Configuration["CookiesExpiresDay"]);
+                    }
+                    catch
+                    {
+                        cookiesExpiresDay = Constants.CookiesExpiresDay;
+                    }
+                    if (checkOutConnect)
+                    {
+                        //if (user.ACLEVEL == 0)
+                        {
+                            ModelState.AddModelError("", "Disable connect");
+                            HttpContext.Response.Cookies.Delete("peid");
+                            HttpContext.Response.Cookies.Delete("pename");
+                            HttpContext.Response.Cookies.Delete("prid");
+                            HttpContext.Response.Cookies.Delete("prname");
+
+
+                            return View(model);
+                        }
+                    }
+
+                    if (cookiesExpiresDay == 0)
+                        cookiesExpiresDay = Constants.CookiesExpiresDay;
+                    cookieOptions.Expires = DateTimeOffset.Now.AddDays(cookiesExpiresDay);
+                    HttpContext.Response.Cookies.Append("peid", user.PE_ID.ToString(), cookieOptions);
+                    HttpContext.Response.Cookies.Append("pename", user.FIO, cookieOptions);
+
+                    HttpContext.Response.Cookies.Append("name", user.name, cookieOptions);
+                    HttpContext.Response.Cookies.Append("role", user.role, cookieOptions);
+
+                    await Authenticate(user, cookieOptions.Expires); // аутентификация
+                    //HttpContext.Response.Cookies.Append(".AspNetCore.Cookies", user.name, cookieOptions);
+                    return RedirectToAction("Index", "Home");
+                }
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+            }
+            return View(model);
+        }
+
+
+        // for test post data in body
+        [Route("LoginDate")]
         [HttpPost]
 		public async Task<IActionResult> Post([FromBody]LoginDate dt)
 		{
@@ -128,8 +186,9 @@ namespace AnyASP
         }
 
 
-        [HttpPost]
-		[Route("Logout")]
+       
+		[Route("Logout")] 
+        [HttpGet]
 		public async Task<IActionResult> Logout()
 		{
 			await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

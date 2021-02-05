@@ -140,7 +140,6 @@ namespace AnyASP.Models
         {
             using (var command = context.Database.GetDbConnection().CreateCommand())
             {
-                //"select d.dt_id ,d.dtname,d.dt,d.dt_sizea,d.dt_sizeb,d.dt_tsizea,d.dt_tsizeb,d.dt_wght,d.triada,d.mix,d.dt_incount from DETAILTREETOREPORT({0}) d"
                 string sql = string.Format("select us_name,us_role,pe_id,pe_name from getwebuser('{0}','{1}')", username, userpasword);
 
                 command.CommandText = sql;
