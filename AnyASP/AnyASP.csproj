@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EntityFramework.Firebird" Version="7.10.1" />
-    <PackageReference Include="EntityFrameworkCore.FirebirdSQL" Version="2.1.2.2" />
-    <PackageReference Include="FirebirdSql.Data.FirebirdClient" Version="7.10.1" />
+    <PackageReference Include="FirebirdSql.EntityFrameworkCore.Firebird" Version="7.10.1" />
     <PackageReference Include="Google.Cloud.Storage.V1" Version="3.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />

@@ -10,7 +10,7 @@
         "projectUniqueName": "D:\\MVS2019\\netcorecrud\\AnyASP\\AnyASP.csproj",
         "projectName": "AnyASP",
         "projectPath": "D:\\MVS2019\\netcorecrud\\AnyASP\\AnyASP.csproj",
-        "packagesPath": "C:\\Users\\unk_amd\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
         "outputPath": "D:\\MVS2019\\netcorecrud\\AnyASP\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
@@ -18,7 +18,7 @@
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\unk_amd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -43,15 +43,7 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "EntityFramework.Firebird": {
-              "target": "Package",
-              "version": "[7.10.1, )"
-            },
-            "EntityFrameworkCore.FirebirdSQL": {
-              "target": "Package",
-              "version": "[2.1.2.2, )"
-            },
-            "FirebirdSql.Data.FirebirdClient": {
+            "FirebirdSql.EntityFrameworkCore.Firebird": {
               "target": "Package",
               "version": "[7.10.1, )"
             },

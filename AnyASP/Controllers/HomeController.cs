@@ -9,18 +9,26 @@ using AnyASP.Models;
 using Google.Cloud.Storage.V1;
 
 
+using Microsoft.EntityFrameworkCore;
+//using FirebirdSql.EntityFrameworkCore.Firebird;
+
+
+
 
 namespace AnyASP.Controllers
 {
     public class HomeController : Controller
     {
         protected Model1 model;
+        public DbSet<USERS> dbUser;
+        
         private Users_dal<USERS, USERS> user;
 
         public HomeController()
         {
             model = new Model1();
             user = new Users_dal<USERS, USERS>(model);
+            dbUser = model.Set<USERS>();
         }
 
         public IActionResult Index()
@@ -40,12 +48,29 @@ namespace AnyASP.Controllers
         [Authorize(Roles = "admin,master,user")]
         public IActionResult Contact()
         {
-           /* PERSONAL pr = personal.GetByID(15);
-            pr.PE_ID = 13;
-            personal.Insert(pr);
-            personal.Save();
-            ViewData["Message"] = "Your contact page.";
-            */
+            int cnt = dbUser.Count();
+            //    USERS us = dbUser.Find(123);
+            /* PERSONAL pr = personal.GetByID(15);
+             pr.PE_ID = 13;
+             personal.Insert(pr);
+             personal.Save();
+             ViewData["Message"] = "Your contact page.";
+             */
+            USERS us = dbUser.Find(123);
+            ViewData["Message"] = cnt.ToString() + us.US_NAME;
+            return View();
+        }
+
+        public IActionResult dbset()
+        {
+            USERS us =  dbUser.Find(123);
+            /* PERSONAL pr = personal.GetByID(15);
+             pr.PE_ID = 13;
+             personal.Insert(pr);
+             personal.Save();
+             ViewData["Message"] = "Your contact page.";
+             */
+            ViewData["Message"] = us.US_NAME;
             return View();
         }
 
