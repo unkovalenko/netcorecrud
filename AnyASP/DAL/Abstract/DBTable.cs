@@ -6,9 +6,13 @@ using System.Linq.Expressions;
 
 namespace AnyASP.DAL
 {
-    public interface IGenericDBRepository<TEntity> where TEntity : class
+    public interface IDBTable<TEntity> where TEntity : class
     {
-        IEnumerable<TEntity> Get(
+        IQueryable<TEntity> Get(
+           Expression<Func<TEntity, bool>> filter = null,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           string includeProperties = "");
+        IEnumerable<TEntity> GetList(
            Expression<Func<TEntity, bool>> filter = null,
            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
            string includeProperties = "");
@@ -20,25 +24,52 @@ namespace AnyASP.DAL
         void Save();
     }
 
-    public  class GenericDBRepository<TEntity>: IGenericDBRepository<TEntity> where TEntity : class
+    public  class EDBTable<TEntity>: IDBTable<TEntity> where TEntity : class
     {
         internal DbContext context;
-        internal DbSet<TEntity> dbSet;
-        
+        internal DbSet<TEntity> dbSet;     
 
-        public GenericDBRepository(DbContext context)
+        public EDBTable(IUnitOfWork UnitOfWork)
         {
-            this.context = context;
+            this.context = UnitOfWork.Context();
             this.dbSet = context.Set<TEntity>();
             
         }
 
-        public virtual IEnumerable<TEntity> Get(
+        public virtual IQueryable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "")
         {
             IQueryable<TEntity> query= dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query);
+            }
+            else
+            {
+                return query;
+            }
+        }
+
+        public virtual IEnumerable<TEntity> GetList(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+            IQueryable<TEntity> query = dbSet;
 
             if (filter != null)
             {

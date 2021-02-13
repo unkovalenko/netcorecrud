@@ -9,12 +9,16 @@ using System.Linq.Expressions;
 
 namespace AnyASP.DAL
 {
+    public interface IViewData<TEntity>
+    {
+        TEntity Get();
+    }
 
 
-    public class VwRepository<TEntity, TVwEntity> : GenericDBRepository<TEntity> where TEntity : class where TVwEntity : class
+    public class DBView<TEntity, TVwEntity> : EDBTable<TEntity> where TEntity : class where TVwEntity : class
     {
         protected IQueryable vwQuery;
-        public VwRepository(DbContext context, IQueryable vwquery=null) : base(context)
+        public DBView(IUnitOfWork UnitOfWork, IQueryable vwquery=null) : base(UnitOfWork)
         {
             vwQuery = vwquery;
         }
@@ -37,7 +41,6 @@ namespace AnyASP.DAL
                           PR_NAME = l.PR_NAME
                       };
              */
-
             return vwQuery;
         }
 
@@ -75,7 +78,7 @@ namespace AnyASP.DAL
             }
         }
 
-
+        
 
     }
 }

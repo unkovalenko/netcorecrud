@@ -17,8 +17,10 @@
 
         [StringLength(75)]
         public string PE_NAME { get; set; }
+        public string REM { get; set; }
+        public int PO_ID { get; set; }
 
-      
+
 
     }
 }

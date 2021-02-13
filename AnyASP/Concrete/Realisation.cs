@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 
 
@@ -60,7 +58,7 @@ namespace AnyASP.Models
 
     public class EControllerExt : IControllerExt
 	{	
-		private  IHostingEnvironment _enviroment;
+		private IWebHostEnvironment _enviroment;
 		
 		private IConfiguration _configuration { get; set; }
 		
@@ -69,7 +67,7 @@ namespace AnyASP.Models
 		public ISQLToolsRepository _sqlTools;
        
        
-		public EControllerExt(IConfiguration configuration, IHostingEnvironment enviroment, 
+		public EControllerExt(IConfiguration configuration, IWebHostEnvironment enviroment, 
 			 ISQLToolsRepository sqltools)
 		{
 			_configuration = configuration;
@@ -84,7 +82,7 @@ namespace AnyASP.Models
                           .AddJsonFile("appsettings.json")
                           .Build();
 		}
-		public IHostingEnvironment Enviroment
+		public IWebHostEnvironment Enviroment
 		{
 			get { return _enviroment; }
 		}
@@ -103,16 +101,16 @@ namespace AnyASP.Models
 			get	{return _sqlTools;}
 		}
         
-        public string PIB(int peid)
-        {
-            return SQLTools.GetString(String.Format("select pe_name from personal where pe_id={0}",peid));
-        }
-        private int GetOpenShiftID(int peid, DateTime date, int shift)
-        {
-            string dat = date.ToString(DateTimeManipulator.dtformatfb);
-            return SQLTools.GetInt(string.Format("select t.ts_id from timesheet t where t.pe_id={0} and   t.ts_date='{1}' and  t.ts_shift={2} and not t.ts_start is null ",
-               peid, dat, shift), 0);
-        }
+     //   public string PIB(int peid)
+     //   {
+     //       return SQLTools.GetString(String.Format("select pe_name from personal where pe_id={0}",peid));
+     //   }
+     //   private int GetOpenShiftID(int peid, DateTime date, int shift)
+     //   {
+     //       string dat = date.ToString(DateTimeManipulator.dtformatfb);
+    //        return SQLTools.GetInt(string.Format("select t.ts_id from timesheet t where t.pe_id={0} and   t.ts_date='{1}' and  t.ts_shift={2} and not t.ts_start is null ",
+     //          peid, dat, shift), 0);
+     //   }
         
         public int GetIdFromCookies(string idName, HttpContext httpContext)
         {
@@ -131,13 +129,13 @@ namespace AnyASP.Models
 
     }
 
-	public class ListToSelect
-	{
-		public int ID { get; set; }
-		public int PRID { get; set; }
-		public string NAME { get; set; }
-		public string ISFREE { get; set; }
-	}
+	//public class ListToSelect
+	//{
+	//	public int ID { get; set; }
+	//	public int PRID { get; set; }
+	//	public string NAME { get; set; }
+	//	public string ISFREE { get; set; }
+	//}
 
 
 

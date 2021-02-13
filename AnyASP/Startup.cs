@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AnyASP.Models;
+using AnyASP.DAL;
 
 namespace AnyASP
 {
@@ -39,6 +40,7 @@ namespace AnyASP
 
             services.AddControllersWithViews();
             services.AddTransient<ISQLToolsRepository, EFSQLToolsRepository>();
+            services.AddTransient<IUnitOfWork, EUnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
