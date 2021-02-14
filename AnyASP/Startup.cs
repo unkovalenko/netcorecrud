@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -36,11 +33,9 @@ namespace AnyASP
                {
                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Login");
                });
-
-
             services.AddControllersWithViews();
             services.AddTransient<ISQLToolsRepository, EFSQLToolsRepository>();
-            services.AddTransient<IUnitOfWork, EUnitOfWork>();
+            services.AddTransient<EUnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

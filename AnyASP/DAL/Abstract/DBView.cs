@@ -3,59 +3,50 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using AnyASP.Models;
 
 
 
 
 namespace AnyASP.DAL
 {
-    public interface IViewData<TEntity>
+    public interface IViewExtensionData<TEntity>
     {
-        TEntity Get();
+        TEntity GetEntity();
     }
 
 
-    public class DBView<TEntity, TVwEntity> : EDBTable<TEntity> where TEntity : class where TVwEntity : class
+    public class DBView<TEntity, TViewExtensionEntity> : DBTable<TEntity> where TEntity : class where TViewExtensionEntity : class
     {
         protected IQueryable vwQuery;
-        public DBView(IUnitOfWork UnitOfWork, IQueryable vwquery=null) : base(UnitOfWork)
+        public DBView(Model1 dbContext, IQueryable vwquery=null) : base(dbContext)
         {
             vwQuery = vwquery;
         }
-        
-        // need override this method in real class
-        public virtual  IQueryable CreateQuery()
-        {
-            /*
-             Model1 model = (Model1)context;
-            vwQuery = from p in model.PERSONAL
-                      join l in model.PARTS on p.PR_ID equals l.PR_ID
-                      join a in model.POST on p.PO_ID equals a.PO_ID
-                      select  new PERSONALVW //   !!!!!!!!!!!!!! PERSONALVW=<TVwEntity> !!!!!!!!!!!!!!!!
-                      {
-                          PR_ID = p.PR_ID.Value,
-                          PE_ID = p.PE_ID,
-                          PE_NAME = p.PE_NAME,
-                          PE_REM = p.REM,
-                          PO_NAME = a.PO_NAME,
-                          PR_NAME = l.PR_NAME
-                      };
-             */
-            return vwQuery;
-        }
 
-         public IQueryable<TVwEntity> GetView()
+        public bool SetQuery(IQueryable _query)
         {
-            return (IQueryable<TVwEntity>)vwQuery;
+            if (vwQuery != null)
+            {
+                vwQuery = null;
+            }
+            vwQuery = _query;
+            return vwQuery != null;
+        }
+               
+
+         public IQueryable<TViewExtensionEntity> GetView()
+        {
+            return (IQueryable<TViewExtensionEntity>)vwQuery;
         }
 
 
-        public virtual IQueryable<TVwEntity> GetView(
-           Expression<Func<TVwEntity, bool>> filter = null,
-           Func<IQueryable<TVwEntity>, IOrderedQueryable<TVwEntity>> orderBy = null,
+        public virtual IQueryable<TViewExtensionEntity> GetView(
+           Expression<Func<TViewExtensionEntity, bool>> filter = null,
+           Func<IQueryable<TViewExtensionEntity>, IOrderedQueryable<TViewExtensionEntity>> orderBy = null,
            string includeProperties = "")
         {
-            IQueryable<TVwEntity> query = (IQueryable < TVwEntity > )vwQuery;
+            IQueryable<TViewExtensionEntity> query = (IQueryable < TViewExtensionEntity > )vwQuery;
 
             if (filter != null)
             {

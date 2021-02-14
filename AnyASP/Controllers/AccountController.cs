@@ -19,11 +19,11 @@ namespace AnyASP
     }
     public class AccountController : Controller
     {
-        public EWebUsers _users;
+        public UsersAccount _users;
         public IControllerExt cntExt;
         public AccountController(IControllerExt myext, Model1 _context)
 		{
-			_users = new EWebUsers(myext.Configuration, _context);
+			_users = new UsersAccount(myext.Configuration, _context);
             cntExt = myext;			
 		}
 
@@ -36,6 +36,7 @@ namespace AnyASP
         }
 
         [Route("Login")]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
@@ -43,7 +44,7 @@ namespace AnyASP
             if (ModelState.IsValid)
             {
 
-                User user = _users.GetUser(model.Name, model.Password);
+                UserAccountData user = _users.GetUser(model.Name, model.Password);
                 if (user != null)
                 {
                     CookieOptions cookieOptions = new CookieOptions();
@@ -109,7 +110,7 @@ namespace AnyASP
             if (ModelState.IsValid)
             {
 
-                User user = _users.GetUser(model.Name, model.Password);
+                UserAccountData user = _users.GetUser(model.Name, model.Password);
                 if (user != null)
                 {
                     CookieOptions cookieOptions = new CookieOptions();
@@ -166,7 +167,7 @@ namespace AnyASP
         }
 
 
-        private async Task Authenticate(User user, DateTimeOffset? expired)
+        private async Task Authenticate(UserAccountData user, DateTimeOffset? expired)
         {
             // создаем один claim
             var claims = new List<Claim>

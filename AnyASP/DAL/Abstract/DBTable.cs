@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using AnyASP.Models;
 
 namespace AnyASP.DAL
 {
@@ -24,14 +25,14 @@ namespace AnyASP.DAL
         void Save();
     }
 
-    public  class EDBTable<TEntity>: IDBTable<TEntity> where TEntity : class
+    public  class DBTable<TEntity>: IDBTable<TEntity> where TEntity : class
     {
-        internal DbContext context;
+        internal Model1 context;
         internal DbSet<TEntity> dbSet;     
 
-        public EDBTable(IUnitOfWork UnitOfWork)
+        public DBTable(Model1 dbContext)
         {
-            this.context = UnitOfWork.Context();
+            this.context = dbContext;
             this.dbSet = context.Set<TEntity>();
             
         }
@@ -110,6 +111,10 @@ namespace AnyASP.DAL
 
         public virtual void Delete(TEntity entityToDelete)
         {
+            if (entityToDelete == null)
+            {
+                return;
+            }
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
